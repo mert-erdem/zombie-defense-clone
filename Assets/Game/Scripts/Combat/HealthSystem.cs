@@ -1,9 +1,11 @@
+using System;
 using UnityEngine;
 
 namespace Game.Scripts.Combat
 {
     public class HealthSystem : MonoBehaviour
     {
+        public event EventHandler OnDie;
         [SerializeField] private int totalHealth = 100;
         public bool IsAlive { get; private set; }
 
@@ -15,7 +17,7 @@ namespace Game.Scripts.Combat
         public void TakeDamage(int amount)
         {
             totalHealth -= amount;
-            print(amount);
+            
             if (totalHealth > 0) return;
 
             Die();
@@ -24,6 +26,7 @@ namespace Game.Scripts.Combat
         private void Die()
         {
             IsAlive = false;
+            OnDie?.Invoke(this, EventArgs.Empty);
         }
     }
 }

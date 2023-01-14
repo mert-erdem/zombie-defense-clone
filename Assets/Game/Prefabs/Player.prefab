@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 8712097068932154609}
   - component: {fileID: 8712097068932154610}
   - component: {fileID: 1943529959}
+  - component: {fileID: 1777761291}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -96,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visual: {fileID: 8712097069483607392}
-  speed: 10
+  speed: 7
   rotatingSpeed: 20
 --- !u!114 &1943529959
 MonoBehaviour:
@@ -113,6 +114,19 @@ MonoBehaviour:
   visual: {fileID: 8712097069483607392}
   rotatingSpeed: 20
   currentWeapon: {fileID: 8712097069121661320}
+--- !u!114 &1777761291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8712097068932154615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b481e8b127c544649424d21bedd1d47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalHealth: 100
 --- !u!1 &8712097069483607399
 GameObject:
   m_ObjectHideFlags: 0
@@ -279,6 +293,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1546389971637673243, guid: edc90447e845347b7870832da4a1cd11,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1b10f17973eaa470a8f7b1647fdf7a6e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: edc90447e845347b7870832da4a1cd11, type: 3}
 --- !u!114 &8712097069121661320 stripped

@@ -35,6 +35,11 @@ namespace Game.Scripts.Combat
         {
             stateCurrent.onUpdate();
         }
+
+        public void SetCurrentWeapon(Weapon weapon)
+        {
+            currentWeapon = weapon;
+        }
     
         private void SetState(State state)
         {
@@ -57,7 +62,7 @@ namespace Game.Scripts.Combat
 
         private void Shoot()
         {
-            if (!IsTargetStillInRange() || !IsTargetAlive())
+            if (!IsTargetAlive() || !IsTargetStillInRange())
             {
                 SetState(stateSearching);
                 IsShooting = false;
