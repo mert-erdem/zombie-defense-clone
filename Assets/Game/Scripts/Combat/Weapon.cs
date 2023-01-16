@@ -12,7 +12,7 @@ namespace Game.Scripts.Combat
 
         public void LaunchBullet(Vector3 targetPos)
         {
-            // launch specific bullet trial object to target
+            // launch specific bullet trail object to target
             // using object pool
         }
 

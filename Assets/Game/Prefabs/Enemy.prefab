@@ -95,7 +95,7 @@ MonoBehaviour:
   agent: {fileID: 1528204313}
   healthSystem: {fileID: 273545989}
   attackRange: 3
-  damage: 10
+  damage: 100
   attackDeltaTime: 1
 --- !u!195 &1528204313
 NavMeshAgent:
