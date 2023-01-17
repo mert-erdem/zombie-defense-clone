@@ -11,6 +11,7 @@ namespace Game.Scripts.Environment
         [Header("Specs")]
         [SerializeField] private int healthPointsPerFrame = 25;
 
+        public int InteractionCount { get; set; }
         public bool CanInteract { get; set; }
 
         private int currentBreakableFrameIndex = 0;
@@ -18,18 +19,23 @@ namespace Game.Scripts.Environment
         private void Start()
         {
             healthSystem.OnTakeDamage += HealthSystem_OnTakeDamage;
+            InteractionCount = breakableFrames.Length;
         }
         
         public void Interact()
         {
             Repair();
         }
-
+        
+        /// <summary>
+        /// frame count based repairing
+        /// </summary>
         private void Repair()
         {
             healthSystem.FillHealth(healthPointsPerFrame);
             breakableFrames[currentBreakableFrameIndex - 1].enabled = true;
             currentBreakableFrameIndex--;
+            print(healthSystem.CurrentHealth);
         }
     
         /// <summary>

@@ -7,30 +7,31 @@ namespace Game.Scripts.Combat
     {
         public event EventHandler<int> OnTakeDamage;
         public event EventHandler OnDie;
+        
         [SerializeField] private int totalHealth = 100;
         public bool IsAlive { get; private set; }
-
-        private int currentHealth;
+        public int TotalHealth => totalHealth;
+        public int CurrentHealth { get; private set; }
 
         private void Start()
         {
             IsAlive = true;
-            currentHealth = totalHealth;
+            CurrentHealth = totalHealth;
         }
 
         public void TakeDamage(int amount)
         {
-            currentHealth -= amount;
+            CurrentHealth -= amount;
             OnTakeDamage?.Invoke(this, amount);
             
-            if (currentHealth > 0) return;
+            if (CurrentHealth > 0) return;
 
             Die();
         }
 
         public void FillHealth(int amount)
         {
-            currentHealth = Mathf.Min(totalHealth, currentHealth + amount);
+            CurrentHealth = Mathf.Min(totalHealth, CurrentHealth + amount);
         }
         
         private void Die()

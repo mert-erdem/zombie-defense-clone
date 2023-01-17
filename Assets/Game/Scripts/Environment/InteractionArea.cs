@@ -7,7 +7,6 @@ namespace Game.Scripts.Environment
         [SerializeField] 
         [Tooltip("The root object that has a component which implements IInteractable interface")] 
         private Transform root;
-        [SerializeField] private int maxInteractions = 1;
         [SerializeField] private float interactionDeltaTime = 0.5f;
 
         private IInteractable interactable;
@@ -21,7 +20,7 @@ namespace Game.Scripts.Environment
 
         private void HandleWithInteraction()
         {
-            if (currentInteractionCount >= maxInteractions) return;
+            if (currentInteractionCount >= interactable.InteractionCount) return;
 
             lastInteractionTime += Time.deltaTime;
 
