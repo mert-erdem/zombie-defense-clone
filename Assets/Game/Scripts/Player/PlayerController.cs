@@ -9,7 +9,6 @@ namespace Game.Scripts.Player
         [Header("Core Specs")]
         [SerializeField] private float speed = 10f;
         [SerializeField] private float rotatingSpeed = 10f;
-        private Vector3 inputDir;
         private Shooter shooter;
 
         private void Start()
@@ -19,10 +18,6 @@ namespace Game.Scripts.Player
 
         private void Update()
         {
-#if UNITY_EDITOR
-            GetKeyboardInput();
-            // joystick input will be added
-#endif
             Move();
         }
 
@@ -30,20 +25,15 @@ namespace Game.Scripts.Player
         private void Move()
         {
             transform.Translate(
-                inputDir * (speed * Time.deltaTime), 
+                InputManager.Instance.GetJoystickInput() * (speed * Time.deltaTime), 
                 Space.Self);
             // do not change the rotation of visual while character is shooting
             if(shooter.IsShooting) return;
         
             visual.forward = Vector3.Slerp(
                 visual.forward,
-                inputDir,
+                InputManager.Instance.GetJoystickInput(),
                 Time.deltaTime * rotatingSpeed);
-        }
-
-        private void GetKeyboardInput()
-        {
-            inputDir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
         }
     }
 }

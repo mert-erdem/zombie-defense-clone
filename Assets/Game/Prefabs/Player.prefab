@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visual: {fileID: 8712097069483607392}
-  speed: 7
+  speed: 10
   rotatingSpeed: 20
 --- !u!114 &1943529959
 MonoBehaviour:
