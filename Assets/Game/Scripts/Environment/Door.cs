@@ -9,7 +9,7 @@ namespace Game.Scripts.Environment
         [SerializeField] private HealthSystem healthSystem;
         [SerializeField] private MeshRenderer[] breakableFrames;
         [Header("Specs")]
-        [SerializeField] private int healthPointsPerFrame = 25;
+        [SerializeField] private int healthPointsPerFrame = 33;
 
         public int InteractionCount { get; set; }
         public bool CanInteract { get; set; }
@@ -19,7 +19,7 @@ namespace Game.Scripts.Environment
         private void Start()
         {
             healthSystem.OnTakeDamage += HealthSystem_OnTakeDamage;
-            InteractionCount = breakableFrames.Length;
+            InteractionCount = healthSystem.TotalHealth;
         }
         
         public void Interact()
@@ -27,14 +27,16 @@ namespace Game.Scripts.Environment
             Repair();
         }
         
-        /// <summary>
-        /// frame count based repairing
-        /// </summary>
         private void Repair()
         {
-            healthSystem.FillHealth(healthPointsPerFrame);
-            breakableFrames[currentBreakableFrameIndex - 1].enabled = true;
-            currentBreakableFrameIndex--;
+            healthSystem.FillHealth(3);
+            
+            if (healthSystem.CurrentHealth % 33 == 0)
+            {
+                breakableFrames[currentBreakableFrameIndex - 1].enabled = true;
+                currentBreakableFrameIndex--;
+            }
+
             print(healthSystem.CurrentHealth);
         }
     

@@ -1,5 +1,9 @@
+using System;
+using Game.Core;
 using Game.Scripts.Combat;
+using Game.Scripts.Core;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game.Scripts.Enemies
 {
@@ -10,13 +14,22 @@ namespace Game.Scripts.Enemies
         [Header("Specs")]
         [SerializeField] private float spawnRate = 1f;
         [SerializeField] private int spawnCount = 10;
+        [SerializeField] private int spawnCountLevelDelta = 2;
 
+        private int currentSpawnCount = 0;
         private float lastTimeSpawned = Mathf.Infinity;
+        private bool canSpawn = false;
+
+        private void Start()
+        {
+            GameManager.ActionLevelStart += GameManager_ActionLevelStart;
+            GameManager.ActionLevelPassed += GameManager_ActionLevelPassed;
+        }
 
         private void Update()
         {
-            if(spawnCount <= 0) return;
-        
+            if (!canSpawn) return;
+            
             SpawnEnemy();
         }
 
@@ -25,11 +38,33 @@ namespace Game.Scripts.Enemies
             lastTimeSpawned += Time.deltaTime;
         
             if (lastTimeSpawned <= spawnRate) return;
+            
             // will be replaced with object pool pattern
             var spawnedEnemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
             spawnedEnemy.SetTarget(targetDoor);
-            spawnCount--;
+            currentSpawnCount++;
             lastTimeSpawned = 0f;
+
+            if (currentSpawnCount != spawnCount) return;
+            
+            canSpawn = false;
+            currentSpawnCount = 0;
+        }
+        
+        private void GameManager_ActionLevelStart()
+        {
+            canSpawn = true;
+        }
+        
+        private void GameManager_ActionLevelPassed()
+        {
+            spawnCount += spawnCountLevelDelta;
+        }
+
+        private void OnDestroy()
+        {
+            GameManager.ActionLevelStart -= GameManager_ActionLevelStart;
+            GameManager.ActionLevelPassed -= GameManager_ActionLevelPassed;
         }
     }
 }

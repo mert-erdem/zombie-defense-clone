@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Game.Core;
 using Game.Scripts.Combat;
 using Game.Scripts.Core;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace Game.Scripts.Enemies
     public class EnemyManager : Singleton<EnemyManager>
     {
         [SerializeField] private HealthSystem player;
-        private List<Enemy> enemies = new List<Enemy>();
+        private readonly List<Enemy> enemies = new List<Enemy>();
 
         public void Join(Enemy enemy)
         {
@@ -19,6 +20,11 @@ namespace Game.Scripts.Enemies
         public void Leave(Enemy enemy)
         {
             enemies.Remove(enemy);
+
+            if (enemies.Count == 0)
+            {
+                GameManager.ActionLevelPassed?.Invoke();
+            }
         }
     }
 }

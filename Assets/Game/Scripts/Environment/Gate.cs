@@ -20,12 +20,9 @@ namespace Game.Scripts.Environment
             moneyToPass--;
             // notify money manager
             // update world space money UI
-            if (moneyToPass == 0)
-            {
-                // unlock new platform part
-                relatedPlatform.SetActive(true);
-                Destroy(gameObject);
-            }
+            if (moneyToPass != 0) return;
+            // unlock new platform part
+            AreaManager.Instance.ActivatePlatform(relatedPlatform, this);
         }
     }
 }
