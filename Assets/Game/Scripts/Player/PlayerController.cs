@@ -6,6 +6,7 @@ namespace Game.Scripts.Player
     public class PlayerController : MonoBehaviour
     {
         [SerializeField] private Transform visual;
+        [SerializeField] private AnimationController animationController;
         [Header("Core Specs")]
         [SerializeField] private float speed = 10f;
         [SerializeField] private float rotatingSpeed = 10f;
@@ -20,13 +21,13 @@ namespace Game.Scripts.Player
         {
             Move();
         }
-
-    
+        
         private void Move()
         {
             transform.Translate(
                 InputManager.Instance.GetJoystickInput() * (speed * Time.deltaTime), 
                 Space.Self);
+            animationController.SetMovementBlendTreeValue(InputManager.Instance.GetJoystickSpeed());
             // do not change the rotation of visual while character is shooting
             if(shooter.IsShooting) return;
         

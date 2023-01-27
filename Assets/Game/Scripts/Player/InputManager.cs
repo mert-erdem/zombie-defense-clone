@@ -21,4 +21,9 @@ public class InputManager : Singleton<InputManager>
 
         return inputDir;
     }
+
+    public float GetJoystickSpeed()
+    {
+        return inputDir.magnitude;
+    }
 }

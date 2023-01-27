@@ -40,7 +40,7 @@ namespace Game.Scripts.Enemies
             if (lastTimeSpawned <= spawnRate) return;
             
             // will be replaced with object pool pattern
-            var spawnedEnemy = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+            var spawnedEnemy = Instantiate(enemyPrefab, transform.position, transform.rotation);
             spawnedEnemy.SetTarget(targetDoor);
             currentSpawnCount++;
             lastTimeSpawned = 0f;
@@ -49,6 +49,7 @@ namespace Game.Scripts.Enemies
             
             canSpawn = false;
             currentSpawnCount = 0;
+            lastTimeSpawned = Mathf.Infinity;
         }
         
         private void GameManager_ActionLevelStart()

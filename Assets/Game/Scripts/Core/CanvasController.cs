@@ -30,7 +30,7 @@ namespace Game.Core.UI
 
         private void SetLevelPassedUI()
         {
-            
+            menuButtons.SetActive(true);
         }
 
         #region UI Buttons' Methods

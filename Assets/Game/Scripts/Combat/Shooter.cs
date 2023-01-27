@@ -70,6 +70,7 @@ namespace Game.Scripts.Combat
             }
         
             var direction = (target.transform.position - transform.position).normalized;
+            direction.y = transform.position.y;
             visual.forward = Vector3.Slerp(
                 visual.forward,
                 direction,

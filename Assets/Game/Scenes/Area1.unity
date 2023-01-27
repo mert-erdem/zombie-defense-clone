@@ -638,11 +638,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4342801609102017488, guid: fb8d5116e85094c888345dd7fca2ca8a,
         type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.20000002
-      objectReference: {fileID: 0}
-    - target: {fileID: 4342801609102017488, guid: fb8d5116e85094c888345dd7fca2ca8a,
-        type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.5
       objectReference: {fileID: 0}
@@ -2102,14 +2097,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1634188211}
-  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -15.840006, y: -0.75000006, z: 5.0199986}
   m_LocalScale: {x: 5, y: 2.6627, z: 0.3747089}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1495705255}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &1634188213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2126,7 +2121,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 2342304612992155717, guid: cd4a08ceb885943d7b482a0929851a07,
     type: 3}
   spawnRate: 1
-  spawnCount: 10
+  spawnCount: 1
   spawnCountLevelDelta: 2
 --- !u!4 &1651011563 stripped
 Transform:
@@ -2209,14 +2204,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1795515786}
-  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -15.840006, y: -0.75000006, z: 5.0199986}
   m_LocalScale: {x: 5, y: 2.6627, z: 0.3747089}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 160856579}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!114 &1795515788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2233,7 +2228,7 @@ MonoBehaviour:
   enemyPrefab: {fileID: 2342304612992155717, guid: cd4a08ceb885943d7b482a0929851a07,
     type: 3}
   spawnRate: 1
-  spawnCount: 10
+  spawnCount: 1
   spawnCountLevelDelta: 2
 --- !u!1 &1798361678
 GameObject:
@@ -2443,7 +2438,6 @@ GameObject:
   - component: {fileID: 2118205509}
   - component: {fileID: 2118205508}
   - component: {fileID: 2118205507}
-  - component: {fileID: 2118205506}
   m_Layer: 0
   m_Name: Ground
   m_TagString: Untagged
@@ -2451,20 +2445,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
   m_IsActive: 1
---- !u!64 &2118205506
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2118205505}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &2118205507
 MeshRenderer:
   m_ObjectHideFlags: 0

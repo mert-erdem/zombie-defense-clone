@@ -8,8 +8,10 @@ namespace Game.Scripts.Enemies
 {
     public class Enemy : MonoBehaviour
     {
+        [Header("Components")]
         [SerializeField] private NavMeshAgent agent;
         [SerializeField] private HealthSystem healthSystem;
+        [SerializeField] private Animator animator;
         [Header("Specs")]
         [SerializeField] private float attackRange = 3f;
         [SerializeField] private int damage = 10;
@@ -23,7 +25,7 @@ namespace Game.Scripts.Enemies
         {
             stateCurrent = new State(null, null, null);
             stateChase = new State(StartAgent, Move, StopAgent);
-            stateAttack = new State(null, HandleWithAttack, null);
+            stateAttack = new State(OnAttackStateStart, HandleWithAttack, OnAttackStateEnd);
         }
 
         private void Start()
@@ -57,7 +59,7 @@ namespace Game.Scripts.Enemies
             agent.SetDestination(target.transform.position);
         
             if (!IsTargetInRange()) return;
-        
+            
             SetState(stateAttack);
         }
 
@@ -95,14 +97,19 @@ namespace Game.Scripts.Enemies
             {
                 SetState(stateChase);
             }
-        
-            target.TakeDamage(damage);
-        
-            if(target.IsAlive) return;
-        
-            // kapı kırıldıktan sonra hedef direkt olarak oyuncu olmalı
-            SetTarget(player); 
-            // animation etc.
+
+            if (target.IsAlive)
+            {
+                bool isDead = target.TakeDamage(damage);
+                animator.SetTrigger("Punch");
+                
+                if (isDead)
+                    SetTarget(player);
+            }
+            else
+            {
+                SetTarget(player);
+            }
         }
 
         private void SetState(State state)
@@ -110,6 +117,16 @@ namespace Game.Scripts.Enemies
             stateCurrent?.onStateExit();
             stateCurrent = state;
             stateCurrent.onStateEnter();
+        }
+
+        private void OnAttackStateStart()
+        {
+            animator.SetBool("Attacking", true);
+        }
+
+        private void OnAttackStateEnd()
+        {
+            animator.SetBool("Attacking", false);
         }
 
         private void HealthSystem_OnDie(object sender, EventArgs eventArgs)
