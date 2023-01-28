@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Pistol
   m_EditorClassIdentifier: 
   damage: 10
-  fireRate: 0.2
-  range: 5
+  fireRate: 0.5
+  range: 10
   fireConeRange: 0

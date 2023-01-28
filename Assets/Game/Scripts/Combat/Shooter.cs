@@ -80,6 +80,7 @@ namespace Game.Scripts.Combat
 
             if (!(lastFiredTime >= currentWeapon.Specs.fireRate)) return;
         
+            currentWeapon.LaunchBullet(target.transform.position);
             target.TakeDamage(currentWeapon.Specs.damage);
 
             lastFiredTime = 0;
