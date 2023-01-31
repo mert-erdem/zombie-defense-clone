@@ -7,13 +7,7 @@ namespace Game.Scripts.Environment
         [SerializeField] private GameObject relatedPlatform;
         [SerializeField] private int moneyToPass = 5;
 
-        public int InteractionCount { get; set; }
         public bool CanInteract { get; set; }
-
-        private void Start()
-        {
-            InteractionCount = moneyToPass;
-        }
 
         public void Interact()
         {

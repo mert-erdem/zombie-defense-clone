@@ -10,7 +10,6 @@ namespace Game.Scripts.Environment
         [SerializeField] private float interactionDeltaTime = 0.5f;
 
         private IInteractable interactable;
-        private int currentInteractionCount = 0;
         private float lastInteractionTime = Mathf.Infinity;
 
         private void Start()
@@ -20,14 +19,11 @@ namespace Game.Scripts.Environment
 
         private void HandleWithInteraction()
         {
-            if (currentInteractionCount >= interactable.InteractionCount) return;
-
             lastInteractionTime += Time.deltaTime;
 
             if (!(lastInteractionTime >= interactionDeltaTime)) return;
         
             interactable.Interact();
-            currentInteractionCount++;
             lastInteractionTime = 0;
         }
     

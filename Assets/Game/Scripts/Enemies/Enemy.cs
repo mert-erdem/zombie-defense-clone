@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Game.Scripts.Combat;
 using Game.Scripts.Core;
 using UnityEngine;
@@ -12,18 +13,22 @@ namespace Game.Scripts.Enemies
         [SerializeField] private NavMeshAgent agent;
         [SerializeField] private HealthSystem healthSystem;
         [SerializeField] private Animator animator;
+        [SerializeField] private SkinnedMeshRenderer meshRenderer;
         [Header("Specs")]
         [SerializeField] private float attackRange = 3f;
         [SerializeField] private int damage = 10;
         [SerializeField] private float attackDeltaTime = 1f;
+        [Header("Effects")] 
+        [SerializeField] private Material materialDefault;
+        [SerializeField] private Material materialDeath;
     
         private HealthSystem target, player;
         private float lastTimeAttack = Mathf.Infinity;
-        private State stateCurrent, stateChase, stateAttack;
+        private State stateCurrent, stateChase, stateAttack, stateDeath;
 
         private void Awake()
         {
-            stateCurrent = new State(null, null, null);
+            stateDeath = new State(null, null, null);
             stateChase = new State(StartAgent, Move, StopAgent);
             stateAttack = new State(OnAttackStateStart, HandleWithAttack, OnAttackStateEnd);
         }
@@ -131,8 +136,25 @@ namespace Game.Scripts.Enemies
 
         private void HealthSystem_OnDie(object sender, EventArgs eventArgs)
         {
+            StartCoroutine(PerformDeathSequence());
+        }
+
+        private IEnumerator PerformDeathSequence()
+        {
+            meshRenderer.material = materialDeath;
+            animator.SetTrigger("Death");
+            SetState(stateDeath);
+
+            yield return new WaitForSeconds(2f);
+            
             EnemyManager.Instance.Leave(this);
-            Destroy(gameObject);
+        }
+
+        private void OnDisable()
+        {
+            EnemyManager.Instance.Leave(this);
+
+            meshRenderer.material = materialDefault;
         }
 
         private void OnDestroy()

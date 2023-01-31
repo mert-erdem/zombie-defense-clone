@@ -13,6 +13,11 @@ namespace Game.Scripts.Combat
         public int TotalHealth => totalHealth;
         public int CurrentHealth { get; private set; }
 
+        private void OnEnable()
+        {
+            Revive();
+        }
+
         private void Start()
         {
             IsAlive = true;
@@ -32,15 +37,28 @@ namespace Game.Scripts.Combat
             return true;
         }
 
-        public void FillHealth(int amount)
+        public bool FillHealth(int amount)
         {
             IsAlive = true;
             CurrentHealth = Mathf.Min(totalHealth, CurrentHealth + amount);
+
+            if (CurrentHealth == TotalHealth)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public int GetTotalDamage()
         {
             return TotalHealth - CurrentHealth;
+        }
+
+        private void Revive()
+        {
+            CurrentHealth = TotalHealth;
+            IsAlive = true;
         }
         
         private void Die()

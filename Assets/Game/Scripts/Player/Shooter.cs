@@ -1,7 +1,8 @@
+using Game.Scripts.Combat;
 using Game.Scripts.Core;
 using UnityEngine;
 
-namespace Game.Scripts.Combat
+namespace Game.Scripts.Player
 {
     public class Shooter : MonoBehaviour
     {
@@ -79,8 +80,11 @@ namespace Game.Scripts.Combat
             lastFiredTime += Time.deltaTime;
 
             if (!(lastFiredTime >= currentWeapon.Specs.fireRate)) return;
-        
-            currentWeapon.LaunchBullet(target.transform.position);
+
+            var bulletTarget = target.transform.position;
+            bulletTarget.y += target.transform.localScale.y;
+            
+            currentWeapon.LaunchBullet(bulletTarget);
             target.TakeDamage(currentWeapon.Specs.damage);
 
             lastFiredTime = 0;

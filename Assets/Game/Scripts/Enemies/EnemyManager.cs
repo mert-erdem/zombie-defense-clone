@@ -20,6 +20,7 @@ namespace Game.Scripts.Enemies
         public void Leave(Enemy enemy)
         {
             enemies.Remove(enemy);
+            EnemyBasicPool.Instance.PullObjectBackImmediate(enemy);
 
             if (enemies.Count == 0)
             {

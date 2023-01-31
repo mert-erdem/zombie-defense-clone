@@ -13,7 +13,6 @@ namespace Game.Scripts.Environment
         [Header("Specs")]
         [SerializeField] private int healthPointsPerFrame = 33;
 
-        public int InteractionCount { get; set; }
         public bool CanInteract { get; set; }
 
         private int currentBreakableFrameIndex = 0;
@@ -22,13 +21,9 @@ namespace Game.Scripts.Environment
         {
             GameManager.ActionLevelStart += GameManager_ActionLevelStart;
             GameManager.ActionLevelPassed += GameManager_ActionLevelPassed;
-            
             healthSystem.OnTakeDamage += HealthSystem_OnTakeDamage;
-            InteractionCount = healthSystem.TotalHealth;
         }
-
         
-
         public void Interact()
         {
             if (!CanInteract) return;
@@ -38,18 +33,22 @@ namespace Game.Scripts.Environment
         
         private void Repair()
         {
-            healthSystem.FillHealth(3);
+            bool isHealthFull = healthSystem.FillHealth(3);
             
-            if (healthSystem.CurrentHealth % healthPointsPerFrame == 0)
+            if (isHealthFull)
             {
-                breakableFrames[currentBreakableFrameIndex - 1].enabled = true;
-                currentBreakableFrameIndex--;
+                CanInteract = false;
+            }
+            
+            var currentHealthFrameInclude = healthSystem.CurrentHealth / healthPointsPerFrame;
+            
+            if (currentHealthFrameInclude > 0)
+            {
+                breakableFrames[currentHealthFrameInclude - 1].enabled = true;
+                currentBreakableFrameIndex = Mathf.Max(0, currentBreakableFrameIndex - 1);
             }
         }
-    
-        /// <summary>
-        /// e is damage value that taken
-        /// </summary>
+        
         private void HealthSystem_OnTakeDamage(object sender, EventArgs eventArgs)
         {
             HandleWithDamage();
