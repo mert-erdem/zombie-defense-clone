@@ -55,7 +55,7 @@ namespace Game.Scripts.Player
                 transform.position, currentWeapon.Specs.range, searchBuffer, searchMask);
         
             if (resultCount == 0) return;
-        
+            
             target = searchBuffer[0].GetComponent<HealthSystem>();
             SetState(stateShooting);
             IsShooting = true;

@@ -22,9 +22,10 @@ namespace Game.Scripts.Enemies
         [SerializeField] private Material materialDefault;
         [SerializeField] private Material materialDeath;
     
-        private HealthSystem target, player;
+        private HealthSystem currentTarget, player;
         private float lastTimeAttack = Mathf.Infinity;
         private State stateCurrent, stateChase, stateAttack, stateDeath;
+        
 
         private void Awake()
         {
@@ -38,19 +39,20 @@ namespace Game.Scripts.Enemies
             healthSystem.OnDie += HealthSystem_OnDie;
         }
 
-        private void OnEnable()
-        {
-            EnemyManager.Instance.Join(this);
-        }
-
         private void Update()
         {
             stateCurrent.onUpdate();
         }
 
-        public void SetTarget(HealthSystem target)
+        public void OnSpawn(HealthSystem target)
         {
-            this.target = target;
+            EnemyManager.Instance.Join(this);
+            SetTarget(target);
+        }
+
+        private void SetTarget(HealthSystem target)
+        {
+            currentTarget = target;
             SetState(stateChase);
         }
 
@@ -61,7 +63,7 @@ namespace Game.Scripts.Enemies
 
         private void Move()
         {
-            agent.SetDestination(target.transform.position);
+            agent.SetDestination(currentTarget.transform.position);
         
             if (!IsTargetInRange()) return;
             
@@ -70,7 +72,7 @@ namespace Game.Scripts.Enemies
 
         private bool IsTargetInRange()
         {
-            var distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
+            var distanceToTarget = Vector3.Distance(transform.position, currentTarget.transform.position);
         
             return distanceToTarget <= attackRange;
         }
@@ -103,9 +105,9 @@ namespace Game.Scripts.Enemies
                 SetState(stateChase);
             }
 
-            if (target.IsAlive)
+            if (currentTarget.IsAlive)
             {
-                bool isDead = target.TakeDamage(damage);
+                bool isDead = currentTarget.TakeDamage(damage);
                 animator.SetTrigger("Punch");
                 
                 if (isDead)
@@ -136,24 +138,20 @@ namespace Game.Scripts.Enemies
 
         private void HealthSystem_OnDie(object sender, EventArgs eventArgs)
         {
-            StartCoroutine(PerformDeathSequence());
+            PerformDeathSequence();
         }
 
-        private IEnumerator PerformDeathSequence()
+        private void PerformDeathSequence()
         {
             meshRenderer.material = materialDeath;
             animator.SetTrigger("Death");
             SetState(stateDeath);
-
-            yield return new WaitForSeconds(2f);
             
             EnemyManager.Instance.Leave(this);
         }
 
         private void OnDisable()
         {
-            EnemyManager.Instance.Leave(this);
-
             meshRenderer.material = materialDefault;
         }
 

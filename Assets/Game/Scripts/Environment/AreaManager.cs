@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Game.Core;
 using Game.Scripts.Core;
@@ -5,6 +6,9 @@ using UnityEngine;
 
 namespace Game.Scripts.Environment
 {
+    /// <summary>
+    /// Main class that saves fields using SaveSystem.cs
+    /// </summary>
     public class AreaManager : Singleton<AreaManager>
     {
         [SerializeField] private int areaLevelCount = 1;
@@ -44,7 +48,6 @@ namespace Game.Scripts.Environment
             int relatedGateIndex = gates.IndexOf(relatedGate);
             GateActives[relatedGateIndex] = false;
             relatedGate.gameObject.SetActive(false);
-            SaveArea();
         }
 
         private void SaveArea()
@@ -87,6 +90,12 @@ namespace Game.Scripts.Environment
         private void GameManager_ActionLevelPassed()
         {
             CurrentLevel++;
+        }
+
+        private void OnDestroy()
+        {
+            GameManager.ActionLevelPassed -= GameManager_ActionLevelPassed;
+            SaveArea();
         }
     }
 }

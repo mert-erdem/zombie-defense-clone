@@ -1,14 +1,16 @@
-using Game.Scripts.Core;
+using Game.Scripts.Environment;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.Core.UI
+namespace Game.Scripts.Core.UI
 {
     public class CanvasController : Singleton<CanvasController>
     {
         [SerializeField] private GameObject menuButtons;
-        [SerializeField] private TextMeshProUGUI textMoney, textWeapon;
+        [SerializeField] private TextMeshProUGUI textMoney, textWeapon, textLevel;
+        [SerializeField] private GameObject levelProgressBar;
+        [SerializeField] private Image levelProgressBarForeGround;
 
 
         void Start()
@@ -21,6 +23,9 @@ namespace Game.Core.UI
         private void SetInGameUI()
         {
             menuButtons.SetActive(false);
+            levelProgressBar.SetActive(true);
+            SetLevelText();
+            SetLevelProgressBar(0f);
         }
 
         private void SetGameOverUI()
@@ -31,6 +36,8 @@ namespace Game.Core.UI
         private void SetLevelPassedUI()
         {
             menuButtons.SetActive(true);
+            SetLevelText();
+            levelProgressBar.SetActive(false);
         }
 
         #region UI Buttons' Methods
@@ -58,6 +65,16 @@ namespace Game.Core.UI
         public void SetWeaponText(string type)
         {
             textWeapon.text = type;
+        }
+
+        public void SetLevelText()
+        {
+            textLevel.text = "level " + AreaManager.Instance.CurrentLevel;
+        }
+
+        public void SetLevelProgressBar(float amount)
+        {
+            levelProgressBarForeGround.fillAmount = amount;
         }
 
         private void OnDestroy()

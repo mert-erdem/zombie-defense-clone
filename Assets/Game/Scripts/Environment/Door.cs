@@ -3,6 +3,7 @@ using Game.Scripts.Combat;
 using Game.Scripts.Core;
 using UnityEngine;
 using UnityEngine.Serialization;
+using TMPro;
 
 namespace Game.Scripts.Environment
 {
@@ -12,6 +13,8 @@ namespace Game.Scripts.Environment
         [SerializeField] private MeshRenderer[] breakableFrames;
         [Header("Specs")]
         [SerializeField] private int healthPointsPerFrame = 33;
+        [Header("UI")] 
+        [SerializeField] private TextMeshProUGUI repairText;
 
         public bool CanInteract { get; set; }
 
@@ -38,6 +41,7 @@ namespace Game.Scripts.Environment
             if (isHealthFull)
             {
                 CanInteract = false;
+                repairText.enabled = false;
             }
             
             var currentHealthFrameInclude = healthSystem.CurrentHealth / healthPointsPerFrame;
@@ -78,6 +82,11 @@ namespace Game.Scripts.Environment
         private void GameManager_ActionLevelPassed()
         {
             CanInteract = true;
+
+            if (healthSystem.GetTotalDamage() > 0)
+            {
+                repairText.enabled = true;
+            }
         }
 
         private void GameManager_ActionLevelStart()

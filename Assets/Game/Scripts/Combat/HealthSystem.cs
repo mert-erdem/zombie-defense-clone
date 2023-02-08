@@ -6,6 +6,7 @@ namespace Game.Scripts.Combat
     public class HealthSystem : MonoBehaviour
     {
         public event EventHandler OnTakeDamage;
+        public event EventHandler OnFillHealth;
         public event EventHandler OnDie;
         
         [SerializeField] private int totalHealth = 100;
@@ -41,6 +42,7 @@ namespace Game.Scripts.Combat
         {
             IsAlive = true;
             CurrentHealth = Mathf.Min(totalHealth, CurrentHealth + amount);
+            OnFillHealth?.Invoke(this, EventArgs.Empty);
 
             if (CurrentHealth == TotalHealth)
             {
@@ -55,10 +57,16 @@ namespace Game.Scripts.Combat
             return TotalHealth - CurrentHealth;
         }
 
+        public float GetHealthNormalized()
+        {
+            return (float) CurrentHealth / TotalHealth;
+        }
+
         private void Revive()
         {
             CurrentHealth = TotalHealth;
             IsAlive = true;
+            OnFillHealth?.Invoke(this, EventArgs.Empty);
         }
         
         private void Die()
