@@ -97,6 +97,7 @@ MonoBehaviour:
   healthSystem: {fileID: 273545989}
   animator: {fileID: 5286615864168151054}
   meshRenderer: {fileID: 4739293063079372007}
+  collider: {fileID: 273545990}
   attackRange: 3
   damage: 20
   attackDeltaTime: 1
@@ -114,7 +115,7 @@ NavMeshAgent:
   m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 32
-  avoidancePriority: 50
+  avoidancePriority: 75
   m_AngularSpeed: 720
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 0

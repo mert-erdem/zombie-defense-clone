@@ -14,6 +14,7 @@ namespace Game.Scripts.Enemies
         [SerializeField] private HealthSystem healthSystem;
         [SerializeField] private Animator animator;
         [SerializeField] private SkinnedMeshRenderer meshRenderer;
+        [SerializeField] private new Collider collider;
         [Header("Specs")]
         [SerializeField] private float attackRange = 3f;
         [SerializeField] private int damage = 10;
@@ -143,6 +144,7 @@ namespace Game.Scripts.Enemies
 
         private void PerformDeathSequence()
         {
+            collider.enabled = false;
             meshRenderer.material = materialDeath;
             animator.SetTrigger("Death");
             SetState(stateDeath);
@@ -152,6 +154,7 @@ namespace Game.Scripts.Enemies
 
         private void OnDisable()
         {
+            collider.enabled = true;
             meshRenderer.material = materialDefault;
         }
 

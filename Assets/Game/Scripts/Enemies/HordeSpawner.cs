@@ -1,5 +1,4 @@
 using System;
-using Game.Core;
 using Game.Scripts.Combat;
 using Game.Scripts.Core;
 using Game.Scripts.Environment;

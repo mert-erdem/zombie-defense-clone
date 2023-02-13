@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Game.Core;
 using Game.Scripts.Combat;
 using Game.Scripts.Core;
 using Game.Scripts.Core.UI;
@@ -19,6 +18,15 @@ namespace Game.Scripts.Enemies
         private void Start()
         {
             GameManager.ActionLevelStart += GameManager_ActionLevelStart;
+            GameManager.ActionGameOverPost += GameManager_ActionGameOverPost;
+        }
+
+        private void GameManager_ActionGameOverPost()
+        {
+            foreach (var enemy in enemies)
+            {
+                EnemyBasicPool.Instance.PullObjectBackImmediate(enemy);
+            }
         }
 
         public void Join(Enemy enemy)
@@ -56,10 +64,13 @@ namespace Game.Scripts.Enemies
 
             totalEnemyCount = newEnemyCount;
         }
+        
+        
 
         private void OnDestroy()
         {
-            GameManager.ActionLevelStart += GameManager_ActionLevelStart;
+            GameManager.ActionLevelStart -= GameManager_ActionLevelStart;
+            GameManager.ActionGameOverPost -= GameManager_ActionGameOverPost;
         }
     }
 }

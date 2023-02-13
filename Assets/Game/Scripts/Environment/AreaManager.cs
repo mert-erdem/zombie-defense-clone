@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Game.Core;
 using Game.Scripts.Core;
 using UnityEngine;
 
@@ -79,7 +78,7 @@ namespace Game.Scripts.Environment
             // handle with gates
             for (int i = 0; i < GateActives.Length; i++)
             {
-                // to prevent activate non explored platforms' gates
+                // to prevent activate unexplored platforms' gates
                 if (!GateActives[i])
                 {
                     gates[i].gameObject.SetActive(false);

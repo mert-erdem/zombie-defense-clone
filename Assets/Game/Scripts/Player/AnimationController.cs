@@ -10,5 +10,10 @@ namespace Game.Scripts.Player
         {
             animator.SetFloat("Speed", value);
         }
+
+        public void PerformDieAnim()
+        {
+            animator.SetTrigger("Die");
+        }
     }
 }

@@ -1,9 +1,13 @@
+using System;
 using Game.Scripts.Combat;
 using Game.Scripts.Core;
 using UnityEngine;
 
 namespace Game.Scripts.Player
 {
+    /// <summary>
+    /// General class for all shooters (player, tarrets)
+    /// </summary>
     public class Shooter : MonoBehaviour
     {
         [SerializeField] private Transform visual;
@@ -18,20 +22,22 @@ namespace Game.Scripts.Player
         [SerializeField] private Weapon currentWeapon;
         private float lastFiredTime = Mathf.Infinity;
         // states
-        private State stateCurrent, stateSearching, stateShooting;
+        private State stateCurrent, stateIdle, stateSearching, stateShooting;
     
         public bool IsShooting { get; private set; }
 
         private void Start()
         {
+            GameManager.ActionGameOver += GameManager_ActionGameOver;
+            
             searchMask = LayerMask.GetMask("Combat");
-            stateCurrent = new State(null, null, null);
+            stateIdle = new State(null, null, null);
             stateSearching = new State(null, SearchForEnemy, null);
             stateShooting = new State(null, Shoot, null);
             // start butonuna bastıktan sonra search e geçmeli
             SetState(stateSearching);
         }
-
+        
         private void Update()
         {
             stateCurrent.onUpdate();
@@ -100,6 +106,16 @@ namespace Game.Scripts.Player
         private bool IsTargetAlive()
         {
             return target.IsAlive;
+        }
+        
+        private void GameManager_ActionGameOver()
+        {
+            SetState(stateIdle);
+        }
+
+        private void OnDestroy()
+        {
+            GameManager.ActionGameOver -= GameManager_ActionGameOver;
         }
     }
 }
