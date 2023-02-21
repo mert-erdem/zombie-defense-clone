@@ -34,7 +34,7 @@ namespace Game.Scripts.Player
             stateIdle = new State(null, null, null);
             stateSearching = new State(null, SearchForEnemy, null);
             stateShooting = new State(null, Shoot, null);
-            // start butonuna bastıktan sonra search e geçmeli
+            
             SetState(stateSearching);
         }
         

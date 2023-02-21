@@ -67,7 +67,7 @@ namespace Game.Scripts.Core.UI
             textWeapon.text = type;
         }
 
-        public void SetLevelText()
+        private void SetLevelText()
         {
             textLevel.text = "level " + AreaManager.Instance.CurrentLevel;
         }

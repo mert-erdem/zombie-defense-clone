@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Game.Scripts.Combat;
 using Game.Scripts.Core;
 using Game.Scripts.Core.UI;
@@ -20,15 +21,7 @@ namespace Game.Scripts.Enemies
             GameManager.ActionLevelStart += GameManager_ActionLevelStart;
             GameManager.ActionGameOverPost += GameManager_ActionGameOverPost;
         }
-
-        private void GameManager_ActionGameOverPost()
-        {
-            foreach (var enemy in enemies)
-            {
-                EnemyBasicPool.Instance.PullObjectBackImmediate(enemy);
-            }
-        }
-
+        
         public void Join(Enemy enemy)
         {
             enemies.Add(enemy);
@@ -40,7 +33,8 @@ namespace Game.Scripts.Enemies
             enemies.Remove(enemy);
             EnemyBasicPool.Instance.PullObjectBack(enemy);
             // update UI
-            CanvasController.Instance.SetLevelProgressBar((float) (totalEnemyCount - enemies.Count) / totalEnemyCount);
+            var levelProgress = (float) (totalEnemyCount - enemies.Count) / totalEnemyCount;
+            CanvasController.Instance.SetLevelProgressBar(levelProgress);
             
             if (enemies.Count == 0)
             {
@@ -55,17 +49,18 @@ namespace Game.Scripts.Enemies
         
         private void GameManager_ActionLevelStart()
         {
-            int newEnemyCount = 0;
-
-            foreach (var hordeSpawner in hordeSpawners)
-            {
-                newEnemyCount += hordeSpawner.TotalSpawnCount;
-            }
+            int newEnemyCount = hordeSpawners.Sum(hordeSpawner => hordeSpawner.TotalSpawnCount);
 
             totalEnemyCount = newEnemyCount;
         }
         
-        
+        private void GameManager_ActionGameOverPost()
+        {
+            foreach (var enemy in enemies)
+            {
+                EnemyBasicPool.Instance.PullObjectBackImmediate(enemy);
+            }
+        }
 
         private void OnDestroy()
         {

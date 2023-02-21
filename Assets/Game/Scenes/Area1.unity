@@ -20,13 +20,13 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.8, g: 0.8, b: 0.8, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18018606, g: 0.22559257, b: 0.30678663, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1687,7 +1687,7 @@ MonoBehaviour:
   targetDoor: {fileID: 766420468}
   enemyPrefab: {fileID: 2342304612992155717, guid: cd4a08ceb885943d7b482a0929851a07,
     type: 3}
-  spawnRate: 1
+  spawnRate: 0.25
   spawnCount: 1
   spawnCountLevelDelta: 2
 --- !u!1 &1640092652
@@ -1842,7 +1842,7 @@ MonoBehaviour:
   targetDoor: {fileID: 953498841}
   enemyPrefab: {fileID: 2342304612992155717, guid: cd4a08ceb885943d7b482a0929851a07,
     type: 3}
-  spawnRate: 1
+  spawnRate: 0.25
   spawnCount: 1
   spawnCountLevelDelta: 2
 --- !u!1 &1798361678
